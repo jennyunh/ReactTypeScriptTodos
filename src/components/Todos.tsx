@@ -1,7 +1,9 @@
 import React from 'react';
-
+import { useContext } from 'react';
+import TodosContext from '../store/todos-context';
+import classes from './Todos.module.css';
 import TodoItem from './TodoItem';
-import Todo from '../models/todo';
+
 
 
 //props is an object with a key named items that 
@@ -15,11 +17,17 @@ import Todo from '../models/todo';
 //the React.FC<{}> part lets you insert an object into the 
 //base object that has the key children (props.children)
 
-const Todos: React.FC<{ items: Todo[] }> = (props) => {
+const Todos: React.FC = () => {
+  
+  
+  const todosCtx = useContext(TodosContext)
+  
   return (
-    <ul>
-      {props.items.map((item) => (
-        <TodoItem key={item.id} text={item.text} />
+    <ul className={classes.todos}>
+      {todosCtx.items.map((item) => (
+
+      
+        <TodoItem removeHandler={todosCtx.removeTodo.bind(null, item.id)} key={item.id} text={item.text} />
       ))}
     </ul>
   );
